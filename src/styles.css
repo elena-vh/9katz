@@ -14,5 +14,6 @@ body {
 
 #root {
   height: 100%;
+  color: rgb(107, 62, 40);
   background-color: hsla(0, 0%, 100%, 0.253);
 }

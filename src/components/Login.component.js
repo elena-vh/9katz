@@ -36,24 +36,28 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   avatar: {
-    backgroundColor: "#277b98",
+    backgroundColor: "rgb(206, 94, 53)",
   },
   form: {
     width: "100%",
     marginTop: theme.spacing(3),
     fontFamily: "Montserrat",
-    color: "#277b98",
+    color: "rgb(206, 94, 53)",
   },
   submit: {
-    background: "#277b98",
+    background: "rgb(206, 94, 53)",
 
     margin: theme.spacing(3, 0, 2),
     fontFamily: "Montserrat",
+    "&:hover": {
+      background: "rgb(107, 62, 40)",
+    },
   },
+
   typo: {
     marginTop: theme.spacing(3),
     fontFamily: "Montserrat",
-    color: "#277b98",
+    color: "rgb(206, 94, 53)",
   },
   login: {
     marginTop: theme.spacing(3),
@@ -61,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     fontFamily: "Montserrat",
-    color: "#277b98",
+    color: "rgb(206, 94, 53)",
   },
 }));
 

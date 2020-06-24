@@ -23,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Montserrat",
   },
   button: {
-    background: "#265667",
+    background: "rgb(231, 144, 100)",
+    "&:hover": { background: "rgb(107, 62, 40)" },
     borderRadius: "20px",
     marginRight: theme.spacing(4),
     color: "white",
@@ -39,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const style = {
-  background: "#277b98",
+  background: "rgb(206, 94, 53)",
 
   border: 0,
   color: "black",
