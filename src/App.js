@@ -33,18 +33,14 @@ const useStyles = makeStyles((theme) => ({
   "@global": {
     "@font-face": "Montserrat",
   },
-  // toolbar: {
-  //   borderRadius: "20px",
-  // },
+
   appbar: {
     boxShadow: 0,
   },
 }));
 const style = {
-  //background: "none",
   background: "#277b98",
-  // "linear-gradient(90deg, rgba(38,131,153,1) 0%, rgba(255,255,255,0.5634454465379901) 50%, rgba(37,38,62,1) 93%)",
-  //borderRadius: "20px",
+
   border: 0,
   color: "black",
   height: 100,
@@ -53,7 +49,7 @@ const style = {
 
 export default function App() {
   const [showLogin, setShowLogin] = useState(false);
-  const handleClick = (e) => {
+  const handleClick = () => {
     setShowLogin(!showLogin);
   };
   const classes = useStyles();

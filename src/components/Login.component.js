@@ -16,11 +16,9 @@ import Container from "@material-ui/core/Container";
 const useStyles = makeStyles((theme) => ({
   main: {
     overflow: "hidden",
-
     marginTop: "80px",
     fontFamily: "Montserrat",
     backgroundColor: "white",
-    //"hsla(0, 0%, 100%, 0.250)",
     left: "100px",
     width: "75%",
     height: "50%",
@@ -41,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#277b98",
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "100%",
     marginTop: theme.spacing(3),
     fontFamily: "Montserrat",
     color: "#277b98",
