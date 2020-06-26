@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -10,71 +9,54 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-
-const useStyles = makeStyles((theme) => ({
-  main: {
-    overflow: "hidden",
-    marginTop: "80px",
-    fontFamily: "Montserrat",
-    backgroundColor: "white",
-    left: "100px",
-    width: "75%",
-    height: "50%",
-    maxWidth: "500px",
-    maxHeight: "700px",
-    borderRadius: "50px",
-    padding: "50px",
-    boxShadow:
-      "0 2.8px 2.2px rgba(0, 0, 0, 0.034),0 6.7px 5.3px rgba(0, 0, 0, 0.048),0 12.5px 10px rgba(0, 0, 0, 0.06),0 22.3px 17.9px rgba(0, 0, 0, 0.072),0 41.8px 33.4px rgba(0, 0, 0, 0.086),0 100px 80px rgba(0, 0, 0, 0.12)",
-  },
-  paper: {
-    marginTop: theme.spacing(3),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  avatar: {
-    backgroundColor: "rgb(206, 94, 53)",
-  },
-  form: {
-    width: "100%",
-    marginTop: theme.spacing(3),
-    fontFamily: "Montserrat",
-    color: "rgb(206, 94, 53)",
-  },
-  submit: {
-    background: "rgb(206, 94, 53)",
-
-    margin: theme.spacing(3, 0, 2),
-    fontFamily: "Montserrat",
-    "&:hover": {
-      background: "rgb(107, 62, 40)",
-    },
-  },
-
-  typo: {
-    marginTop: theme.spacing(3),
-    fontFamily: "Montserrat",
-    color: "rgb(206, 94, 53)",
-  },
-  login: {
-    marginTop: theme.spacing(3),
-    fontFamily: "Montserrat",
-  },
-  link: {
-    fontFamily: "Montserrat",
-    color: "rgb(206, 94, 53)",
-  },
-}));
+import { useStyles } from "./Styles.component";
+import { create } from "apisauce";
+import Alert from "@material-ui/lab/Alert";
 
 export const Login = () => {
+  const [showAlert, setShowAlert] = useState(false);
+  const initialFormData = Object.freeze({ email: "", password: "" });
+  const [formData, updateFormData] = useState(initialFormData);
+
+  const handleChange = (e) => {
+    updateFormData({ ...formData, [e.target.name]: e.target.value.trim() });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    submitUser();
+    setShowAlert(true);
+  };
+
+  const headers = {
+    Accept: "application/json",
+    "Content-type": "application/json",
+  };
+  const baseURL = "https://jsonplaceholder.typicode.com";
+  const api = create({
+    baseURL: baseURL,
+    headers: headers,
+    timeout: 15000,
+  });
+
+  // start making calls
+
+  const submitUser = async () => {
+    const response = await api.get("./users");
+
+    response.data.map((el, i, arr) => {
+      if (el.email === formData.email) {
+        console.log(response.data[i]);
+      }
+      return response.data[i];
+    });
+  };
+
   const classes = useStyles();
 
   return (
     <Container component="main" maxWidth="xs" className={classes.main}>
-      <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -83,9 +65,17 @@ export const Login = () => {
           Hey, good to see you again!
         </Typography>
         <Typography component="h1" variant="h5" className={classes.login}>
-          Log In
+          Sign In
         </Typography>
-        <form className={classes.form} noValidate>
+
+        {showAlert ? (
+          <Alert severity="error" className={classes.alert}>
+            Sorry, we can't find an account with this email address. Please try
+            again or create a new account.
+          </Alert>
+        ) : null}
+
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -96,6 +86,7 @@ export const Login = () => {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={handleChange}
           />
           <TextField
             variant="outlined"
@@ -107,9 +98,10 @@ export const Login = () => {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={handleChange}
           />
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
+            control={<Checkbox value="remember" color="default" />}
             label="Remember me"
           />
           <Button
@@ -119,7 +111,7 @@ export const Login = () => {
             color="primary"
             className={classes.submit}
           >
-            Log In
+            Sign In
           </Button>
           <Grid container>
             <Grid item xs>

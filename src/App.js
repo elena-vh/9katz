@@ -7,7 +7,6 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import { Login } from "./components/Login.component";
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -41,7 +40,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 const style = {
   background: "rgb(206, 94, 53)",
-
   border: 0,
   color: "black",
   height: 100,
@@ -53,6 +51,7 @@ export default function App() {
   const handleClick = () => {
     setShowLogin(!showLogin);
   };
+
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -73,12 +72,12 @@ export default function App() {
             color="inherit"
             className={classes.button}
           >
-            Login
+            SIGN IN
           </Button>
         </ToolBar>
       </AppBar>
 
-      {showLogin ? <Login /> : null}
+      {!showLogin ? <Login /> : null}
     </div>
   );
 }
