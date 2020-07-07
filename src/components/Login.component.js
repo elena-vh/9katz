@@ -25,34 +25,85 @@ export const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    submitUser();
+    authenticate();
     setShowAlert(true);
   };
 
-  const headers = {
-    Accept: "application/json",
-    "Content-type": "application/json",
-  };
-  const baseURL = "https://jsonplaceholder.typicode.com";
+  // const headers = {
+  // //  "Content-type": "application/json",
+  // };
+  const baseURL = "http://51.91.123.86/";
   const api = create({
     baseURL: baseURL,
-    headers: headers,
-    timeout: 15000,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+    timeout: 10000,
   });
 
-  // start making calls
+  const authenticate = async () => {
+    const response = await api.post("/auth", formData);
+    if (response.ok) {
+      console.log(response.data);
+      if (response.data) {
+        api.setHeader("Authorization", "Bearer " + response.data);
 
-  const submitUser = async () => {
-    const response = await api.get("./users");
-
-    response.data.map((el, i, arr) => {
-      if (el.email === formData.email) {
-        console.log(response.data[i]);
+        console.log(api.headers);
+        console.log(api);
+        const getData = await api.get("/users");
+        console.log(api);
+        console.log(getData);
       }
-      return response.data[i];
-    });
+    }
   };
 
+  // , {
+  //             headers: { Authorization: `Bearer ${tokens.jwtToken}` },
+  //           }
+  // api.addResponseTransform((response) => {
+  //   if (response.ok) {
+  //     if (response.data) {
+  //       tokens.jwtToken = response.data;
+  //       console.log(tokens.jwtToken);
+  //       //alert("OK");
+  //       //api.setHeader("Authorization", `Bearer ${tokens.jwtToken}`);
+  //       api
+  //         // .setHeader("Authorization", `Bearer ${tokens.jwtToken}`)
+
+  //         .get("/users", {
+  //           headers: { Authorization: `Bearer ${tokens.jwtToken}` },
+  //           "Content-type": "application/json; charset=UTF-8; xml",
+  //         })
+  //         // .setHeader("Authorization", `Bearer ${tokens.jwtToken}`)
+
+  //         .then((res) => console.log(res))
+  //         .catch((error) => console.log(error));
+  //     }
+  //   }
+  // });
+  //api.setHeader("Authorization", `Bearer ${tokens.jwtToken}`);
+
+  //api.setHeader("Authorization", `Bearer ${tokens.jwtToken}`);
+  // api.addRequestTransform((request) => {
+  //   request.headers["Authorization"] = `Bearer ${tokens}`;
+  //   console.log(request);
+
+  // if (response.ok) {
+  //   if (response.data) {
+  //     tokens.jwtToken = response.data;
+  //     console.log(response);
+  //   }
+  //}
+  //});
+  //   if (tokens.jwtToken) {
+  //     request.config.headers.Authorization = `Bearer ${tokens.jwtToken}`;
+  //     console.log(request.config.headers);
+  //   }
+  // });
+  //email: "admin@thinslices.com",
+  //    password: "qwe123",
   const classes = useStyles();
 
   return (
